@@ -29,12 +29,12 @@ request('http://www.nfl.com/stats/categorystats?tabSeq=0&statisticCategory=PASSI
 
     var tableRows = $('tr')
 
-    //Player, Team, Pos, Comp, Att, Yards, Tds, interceptions
+    //Player, Team, Comp, Att, Yards, Tds, interceptions
 
     //skip first row
     tableRows.slice(1).each(function(i, element) {
       let cleanRow = [];
-      let justThese = [1,2, 4, 5, 8, 11, 12];
+      let justThese = [1, 2, 4, 5, 8, 11, 12];
       let tds = $(element).children('td');
       
       tds.each(function(tdIndex, td){
@@ -45,7 +45,7 @@ request('http://www.nfl.com/stats/categorystats?tabSeq=0&statisticCategory=PASSI
         if (justThese.indexOf(i) >= 0) return el;
       });
 
-      connection.query("INSERT INTO quarterbacks (player, team, pos, comp, att, yards, tds, interceptions) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [
+      connection.query("INSERT INTO quarterbacks (player, team, comp, att, yards, tds, interceptions) VALUES (?, ?, ?, ?, ?, ?, ?)", [
               filteredRow[0],
               filteredRow[1],
               filteredRow[2],
@@ -53,12 +53,9 @@ request('http://www.nfl.com/stats/categorystats?tabSeq=0&statisticCategory=PASSI
               filteredRow[4],
               filteredRow[5],
               filteredRow[6],
-              filteredRow[7]
             ], function(err, res) {
               if (err) return console.log(err);
               else console.log('done')
             });
     });
-
-
 });
