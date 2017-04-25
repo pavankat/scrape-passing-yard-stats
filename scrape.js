@@ -45,17 +45,18 @@ request('http://www.nfl.com/stats/categorystats?tabSeq=0&statisticCategory=PASSI
         if (justThese.indexOf(i) >= 0) return el;
       });
 
-      connection.query("INSERT INTO quarterbacks SET ?", {
-              player: filteredRow[0],
-              team: filteredRow[1],
-              pos: filteredRow[2],
-              comp: filteredRow[3],
-              att: filteredRow[4],
-              yards: filteredRow[5],
-              tds: filteredRow[6],
-              interceptions: filteredRow[7]
-            }, function(err, res) {
-              console.log('done')
+      connection.query("INSERT INTO quarterbacks (player, team, pos, comp, att, yards, tds, interceptions) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [
+              filteredRow[0],
+              filteredRow[1],
+              filteredRow[2],
+              filteredRow[3],
+              filteredRow[4],
+              filteredRow[5],
+              filteredRow[6],
+              filteredRow[7]
+            ], function(err, res) {
+              if (err) return console.log(err);
+              else console.log('done')
             });
     });
 
